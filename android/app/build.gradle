@@ -101,7 +101,13 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    allprojects {
+        repositories {
 
+            maven { url 'https://esri.jfrog.io/artifactory/arcgis' }
+
+        }
+    }
     splits {
         abi {
             reset()
@@ -109,6 +115,16 @@ android {
             universalApk false  // If true, also generate a universal APK
             include (*reactNativeArchitectures())
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
     }
     signingConfigs {
         debug {
@@ -153,7 +169,11 @@ dependencies {
     implementation("com.facebook.react:react-android")
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.google.android.material:material:1.6.1'
 
+    implementation "com.esri.arcgisruntime:arcgis-android:$arcgisAndroidVersion"
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.squareup.okhttp3', module:'okhttp'
